@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        body {
+            font-family: 'Nunito';
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #B5D8FF;
+        }
+        #roundedRectangle {
+            position: relative;
+            width: 1000px;
+            height: 600px;
+            background-color: #5C9CE5;
+            border-radius: 7%;
+            overflow: hidden;
+        }
+
+        #innerRectangle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 750px;
+            height: 100%;
+            background-color: #E4F1FF;
+            border-radius: 7%;
+            overflow: hidden;
+            /* Ensure the inner content doesn't overflow */
+        }
+
+        #whiterect {
+            position: absolute;
+            top: 95px;
+            left: 35px;
+            width: 680px;
+            height: 40%;
+            background-color: white;
+            border-radius: 12px;
+        }
+
+        #image {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            height: 250px;
+            background: url('building.png') center/cover;
+            border-radius: 7%;
+        }
+
+        #welcomeText {
+            font-family: 'Nunito';
+            position: absolute;
+            top: 35px;
+            left: 35px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #weatherText {
+            font-family: 'Nunito';
+            position: absolute;
+            top: 60px;
+            left: 35px;
+            font-size: 15px;
+            color: #333;
+        }
+
+        #uh {
+            font-family: 'Nunito';
+            position: absolute;
+            top: 12px;
+            left: 10px;
+            font-size: 15px;
+            color: #333;
+        }
+
+        #dropdown {
+            position: absolute;
+            top: 8px;
+            left: 220px;
+            width: 126px;
+            border-radius: 4px;
+        }
+
+        .next {
+            background-color: #F1F1F1;
+            color: black;
+            position: absolute;
+            top: 10px;
+            left: 580px;
+            text-decoration: none;
+            padding: 5px;
+            border-radius: 4px;
+        }
+.dots{
+        position: absolute;
+   top: 48px;
+        left: 88%;
+        transform: translate(-50%, -50%);
+        color: black;
+        font-size: 30px;
+      }
+ .person{
+        position: absolute;
+   top: 48px;
+        left: 94%;
+        transform: translate(-50%, -50%);
+        color: black;
+        font-size: 30px;
+      }
+        /* New styles for the white boxes */
+        .whiteBox {
+            position: absolute;
+            width: 155px;
+            height: 110px;
+            background-color: white;
+
+            margin-top: 20px;
+            border-radius: 7%;
+        }
+.i1 {
+        position: absolute;
+        top: 30px;
+        left:38px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 24px;
+      }
+.i2 {
+        position: absolute;
+        top: 30px;
+        left: 120px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 30px;
+      }
+ .i3a {
+        position: absolute;
+        top: 25px;
+        left: 160px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 5px;
+      }
+
+      .i3 {
+        position: absolute;
+        top: 30px;
+        left: 200px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 35px;
+      }
+
+      .i3b {
+        position: absolute;
+        top: 25px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 5px;
+      }   .unitC {
+        position: absolute;
+        top: 30px;
+        left: 170px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 20px;
+      }
+
+      .unitF {
+        position: absolute;
+        top: 30px;
+        left: 235px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 20px;
+      }
+
+
+      .i3c {
+        position: absolute;
+        top: 90px;
+        left:50px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 15px;
+      }
+	.location {
+        position: absolute;
+        top: 90px;
+        left: 125px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 16px;
+      }
+
+      .date {
+        position: absolute;
+        top: 115px;
+        left: 80px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 10px;
+      }
+
+      .time1 {
+        position: absolute;
+        top: 90px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 10px;
+      }
+
+      .time2 {
+        position: absolute;
+        top: 110px;
+        left: 225px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 10px;
+      }
+
+
+      .i3d {
+        position: absolute;
+        top: 90px;
+        left:200px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 10px;
+      }
+
+      .i3e {
+        position: absolute;
+        top: 110px;
+        left:200px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 10px;
+      }
+
+      .i4 {
+        position: absolute;
+        top: 200px;
+        left: 40px;
+        transform: translate(-50%, -50%);
+        color: white;
+	font-weight:none;
+        font-size: 30px;
+      }
+    .temp {
+        position: absolute;
+        top: 200px;
+        left: 125px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 75px;
+      }
+.deg {
+        position: absolute;
+        top:175px;
+        left: 185px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight:bold;
+        font-size: 15px;
+      }
+
+  
+
+      
+.i5 {
+        position: absolute;
+        top: 200px;
+        left: 210px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 30px;
+      }
+
+      .i6 {
+        position: absolute;
+        top: 260px;
+        left: 95px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 20px;
+      }
+
+.sun {
+        position: absolute;
+        top: 260px;
+        left: 140px;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 16px;
+      }
+.graph1 {
+        position: absolute;
+        top: 20%;
+        left: 19%;
+        transform: translate(-50%, -50%);
+        color: orange;
+        font-size: 20px;
+      }
+  .graph2 {
+        position: absolute;
+        top: 20%;
+        left: 25%;
+        transform: translate(-50%, -50%);
+        color: orange;
+        font-size: 20px;
+      }
+  .graph3 {
+        position: absolute;
+        top: 20%;
+        left: 32%;
+        transform: translate(-50%, -50%);
+        color: grey;
+        font-size: 20px;
+      }
+  .graph4 {
+        position: absolute;
+        top: 20%;
+        left: 38%;
+        transform: translate(-50%, -50%);
+        color: grey;
+        font-size: 20px;
+      }
+  .graph5 {
+        position: absolute;
+        top: 20%;
+        left: 45%;
+        transform: translate(-50%, -50%);
+        color: grey;
+        font-size: 20px;
+      }
+  .graph6 {
+        position: absolute;
+        top: 20%;
+        left: 52%;
+        transform: translate(-50%, -50%);
+        color: grey;
+        font-size: 20px;
+      }
+  .graph7 {
+        position: absolute;
+        top: 20%;
+        left:59%;
+        transform: translate(-50%, -50%);
+        color: grey;
+        font-size: 20px;
+      }
+ .graph8 {
+        position: absolute;
+        top: 20%;
+        left: 65%;
+        transform: translate(-50%, -50%);
+        color: grey;
+        font-size: 20px;
+      }
+ .graph9 {
+        position: absolute;
+        top: 20%;
+        left: 72%;
+        transform: translate(-50%, -50%);
+        color: grey;
+        font-size: 20px;
+      }
+ .graph10 {
+        position: absolute;
+        top: 20%;
+        left: 79%;
+        transform: translate(-50%, -50%);
+        color: orange;
+        font-size: 20px;
+      }
+ .Now {
+        position: absolute;
+        top: 27%;
+        left: 19%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+  .eleven {
+        position: absolute;
+        top: 27%;
+        left: 25%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+  .twelve{
+        position: absolute;
+        top: 27%;
+        left: 32%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+  .thirteen {
+        position: absolute;
+        top: 27%;
+        left: 38%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+  .fourteen {
+        position: absolute;
+        top: 27%;
+        left: 45%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+  .fifteen {
+        position: absolute;
+        top: 27%;
+        left: 52%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+  .sixteen {
+        position: absolute;
+        top: 27%;
+        left: 59%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+.seventeen {
+        position: absolute;
+        top: 27%;
+        left: 65%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+.eighteen {
+        position: absolute;
+        top: 27%;
+        left: 72%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+.nineteen {
+        position: absolute;
+        top: 27%;
+        left: 79%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+      }
+
+   .progress-segment {
+      display: flex;
+      margin-bottom: 2em;
+      position: relative;
+      top: 80px;
+      left: 10px;
+      width: 90%;
+    }
+  .segment-blue,
+    .segment-mixed,
+    .segment-grey {
+      flex: 1;
+      margin-right: 2px;
+      height: 6px;
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .segment-blue {
+      background: #5C9CE5;
+    }
+
+    .segment-mixed {
+      background: linear-gradient(to right, #5C9CE5 0%, #5C9CE5 40%, lightgray 40%, lightgray 100%);
+    }
+
+    .segment-grey {
+      background: lightgray;
+    }
+  .segment-partial-bluee {
+      flex: 1; 
+      margin-right: 2px;
+      height: 6px;
+      border-radius: 3px;
+      position: relative;
+      background: linear-gradient(to right, #5C9CE5 0%, #5C9CE5 50%, lightgray 50%, lightgray 100%);
+    }
+.degree-label {
+      font-size: 8px;
+    }
+   .progress-bar {
+margin-right:10px;
+left:5px;
+      height: 6px;
+      border-radius: 3px;
+      align:center;
+      top:80px;
+      background: linear-gradient(to right, #5C9CE5 0%, #5C9CE5 60%, lightgray 60%, lightgray 100%);
+      position: relative;
+    }
+
+    .label {
+      font-family: 'Nunito', sans-serif;
+      font-size: 10px;
+      color: #666;
+      width: 100%;
+      position: absolute;
+      top: -15px;
+      left: 10;
+    }
+
+        .item, .uncovered {
+            flex: 1; 
+            margin-right: 2px;
+            height: 6px;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .item {
+            background-color: #5C9CE5;
+        }
+
+        .uncovered {
+            flex: 0.82;
+            background: linear-gradient(to right, #5C9CE5 0%, #5C9CE5 50%, lightgray 50%, lightgray 100%);
+        }
+
+        .label {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10px;
+            color: #666;
+            width: 100%;
+            position: absolute;
+            top: -15px; 
+            left: 10; 
+        }
+
+        #box1 {
+            top: 240px;
+            left: 80px;
+        }
+
+        #box2 {
+            top: 240px;
+            left: 265px;
+        }
+
+        #box3 {
+            top: 240px;
+            left: 450px;
+        }
+
+        #box4 {
+            top: 370px;
+            left: 80px;
+        }
+
+        #box5 {
+            top: 370px;
+            left: 265px;
+        }
+
+        #box6 {
+            top: 370px;
+            left: 450px;
+        }
+.headings{
+  position: absolute;
+   top: 22%;
+        left: 34%;
+        transform: translate(-50%, -50%);
+        color: black;
+        font-size: 14px;
+
+      }
+.heading1{
+  position: absolute;
+   top: 104%;
+        left: 10%;
+        transform: translate(-50%, -50%);
+        color: black;
+        font-size: 12px;
+
+      }
+.prog{
+  position: relative;
+  margin: 2px;
+  float:left;
+  text-align: center;
+top:40px;
+left:30px;
+}
+.Overflow{ 
+  position: relative;
+  overflow: hidden; 
+  width: 90px; height: 45px;
+  margin-bottom: -14px; 
+}
+.bar {
+  position: absolute;
+  top: 0; left: 0;
+  width: 90px; height: 90px; 
+  border-radius: 50%;
+  box-sizing: border-box;
+  transform: rotate(-45deg); 
+  border: 5px solid #0bf;    
+  border-bottom-color: #0bf; 
+  border-right-color: #eee;
+}
+
+.percentages{
+  position: absolute;
+   top: 42%;
+        left: 45%;
+        transform: translate(-50%, -50%);
+        color: black ;
+        font-size: 14px;
+
+      }
+ .boxicons1{
+        position: absolute;
+   top: 18%;
+        left: 78%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 15px;
+background-color: #0bf;
+      }
+
+        #temperature_chart_div {
+            position: absolute;
+            top: 70px;
+            left: 60px;
+            width: 80%; 
+            height: 70%; 
+        }
+       
+    </style>
+</head>
+<body>
+<div id="roundedRectangle">
+    <div id="innerRectangle">
+        <div id="welcomeText"><b>Welcome back Isabella!</b></div>
+        <div id="weatherText">Check out today's weather information</div>
+<span class="material-icons dots">more_horiz</span><span class="material-icons person">account_circle</span>
+        <div id="whiterect">
+            <div id="uh"><b>Upcoming hours</b></div>
+            <div id="dropdown">
+                <select id="dropdown">
+                    <option value="1">Rain Precipitation</option>
+                </select>
+            </div>
+
+            <div><a href="#" class="next"><b>Next days &raquo;</b></a></div>
+            <span class="material-icons graph1">wb_sunny</span>
+            <span class="material-icons graph2">wb_sunny</span>
+            <span class="material-icons graph3">cloud</span>
+            <span class="material-icons graph4">cloud</span>
+            <span class="material-icons graph5">cloud</span>
+            <span class="material-icons graph6">thunderstorm</span>
+            <span class="material-icons graph7">ac_unit</span>
+            <span class="material-icons graph8">thunderstorm</span>
+            <span class="material-icons graph9">cloud</span>
+            <span class="material-icons graph10">wb_sunny</span>
+            <span class="Now">Now</span>
+            <span class="eleven">11:00</span>
+            <span class="twelve">12:00</span>
+            <span class="thirteen">13:00</span>
+            <span class="fourteen">14:00</span>
+            <span class="fifteen">15:00</span>
+            <span class="sixteen">16:00</span>
+            <span class="seventeen">17:00</span>
+            <span class="eighteen">18:00</span>
+            <span class="nineteen">19:00</span>
+
+            
+            <div class="whiteBox" id="box1">
+                <div class="headings"><b>Humidity</b></div>
+                <div class="percentages"><b>82% </b>bad</div>
+                <span class="material-icons boxicons1">water_drop</span>
+                <div class="progress-segment">
+                    <div class="label">Good</div><div class="item"></div>
+                    <div class="label" style="text-align:center;">Normal</div><div class="item"></div>
+                    <div class="label" style="text-align:right;">Bad</div><div class="uncovered"></div>
+                </div>
+            </div>
+            <div class="whiteBox" id="box2">
+                <div class="headings"><b>Wind</b></div>
+		<span class="material-icons boxicons1">air</span>
+                <div class="prog">
+  		<div class="Overflow">
+               <div class="bar"></div>
+  
+ <span><br>20
+</span>km/hr</div>
+
+            </div>
+            </div>
+            <div class="whiteBox" id="box3">
+                <div class="headings"><b>Precipitation</b></div>
+                <div class="percentages"><b>1.4 cm</b></div>
+                <span class="material-icons boxicons1">thunderstorm</span>
+                <div class="progress-segment">
+                    <div class="segment-blue"><div class="label">0</div></div>
+                    <div class="segment-mixed"><div class="label">10</div></div>
+                    <div class="segment-grey"><div class="label">20</div></div>
+                    <div class="segment-grey"><div class="label">30</div></div>
+                    <div class="segment-grey"><div class="label">40</div></div>
+                    <div class="segment-grey"><div class="label">50</div></div>
+                    <div class="segment-grey"><div class="label">60</div></div>
+                    <div class="segment-grey"><div class="label">70</div></div>
+                    <div class="segment-grey"><div class="label">80</div></div>
+                    <div class="segment-grey"><div class="label">90</div></div>
+                </div>
+            </div>
+            <div class="whiteBox" id="box4">
+                <div class="headings"><b>UV Index</b></div>
+                <div class="percentages"><b>4   </b>medium</div>
+                <span class="material-icons boxicons1">light_mode</span>
+                <div class="progress-segment">
+                    <div class="segment-blue"><div class="label">0-2</div></div>
+                    <div class="segment-partial-bluee"><div class="label">3-5</div></div>
+                    <div class="segment-grey"><div class="label">6-7</div></div>
+                    <div class="segment-grey"><div class="label">8-10</div></div>
+                    <div class="segment-grey"><div class="label">11+</div></div>
+                </div>
+            </div>
+            <div class="whiteBox" id="box5">
+                <div class="headings"><b>Feels Like</b></div>
+                <div class="percentages"><b>30º</b></div>
+                <span class="material-icons boxicons1">device_thermostat</span>
+                <div class="progress-bar">
+                    <div class="label degree-label" style="text-align:left;">0&deg;</div>
+                    <div class="label degree-label" style="text-align:center;">25&deg;</div>
+                    <div class="label degree-label" style="text-align: right;">50&deg;</div>
+                </div>
+            </div>
+            <div class="whiteBox" id="box6">
+                <div class="headings"><b>Chance Of Rain</b></div>
+                <div class="percentages"><b>42%</b></div>
+                <span class="material-icons boxicons1">thunderstorm</span>
+                <div class="progress-bar">
+                    <div class="label degree-label" style="text-align:left;">0%</div>
+                    <div class="label degree-label" style="left:22%;">25%</div>
+                    <div class="label degree-label" style="text-align:center;">50%</div>
+                    <div class="label degree-label" style="left:62%;">75%</div>
+                    <div class="label degree-label" style="text-align: right;">100%</div>
+                </div>
+            </div>
+          
+            <div id="temperature_chart_div"></div>
+<div class="heading1"><b>More details of today's weather</b></div>
+
+        </div>
+    </div>
+
+    <span class="material-icons i1">add_box</span>
+    <span class="material-icons i2">more_horiz</span>
+    <span class="material-icons i3a">circle</span><span class="unitC">C</span>
+    <span class="material-icons i3">toggle_off</span>
+    <span class="material-icons i3b">circle</span><span class="unitF">F</span>
+    <span class="material-icons i3c">near_me</span><span class="location">New York , USA </span>
+    <span class="material-icons i3d">wb_twilight</span><span class="time1">07:19 </span>
+    <span class="date">Today , 28 Sept </span>
+    <span class="material-icons i3e">wb_twilight</span>
+    <span class="time2">19:32 </span>
+    <span class="material-icons i4">navigate_before</span><span class="temp">27</span>
+    <span class="material-icons deg">radio_button_unchecked</span>
+    <span class="material-icons i5">keyboard_arrow_right</span>
+    <span class="material-icons i6">light_mode</span><span class="sun">Sunny</span>
+    <div id="image"></div>
+</div>
+
+<script>
+    // Google Charts code for the temperature graph
+    google.charts.load('current', { packages: ['corechart', 'line'] });
+    google.charts.setOnLoadCallback(drawTemperatureChart);
+
+    function drawTemperatureChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Prediction(%)');
+        data.addColumn('number', 'Temperature');
+
+        data.addRows([
+            [10, 25],
+            [20, 26],
+            [30, 23],
+            [40, 22],
+            [50, 21],
+            [60, 20],
+            [70, 19],
+            [80, 20],
+            [90, 22],
+            [100, 24]
+        ]);
+
+        var options = {
+            hAxis: {
+                title: 'Prediction(%)',
+                format: '#\'%\'',
+                gridlines: { count: 5}
+            },
+            vAxis: {
+                title: 'Temperature (°C)',
+                gridlines: { count: 5 }
+            },
+            curveType: 'function',
+            legend: { position: 'none' },
+            pointSize: 5,
+            series: {
+                0: { pointShape: 'circle' }
+            }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('temperature_chart_div'));
+        chart.draw(data, options);
+    }
+
+</script>
+
+</body>
+</html>
